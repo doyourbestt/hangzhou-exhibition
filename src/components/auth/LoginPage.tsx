@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { ArrowRight, Lock, Circle, Square, Triangle } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowRight, Check } from 'lucide-react';
 
 interface LoginPageProps {
   onLogin: (inviteCode: string, nickname: string) => void;
@@ -10,10 +10,10 @@ export const LoginPage = ({ onLogin }: LoginPageProps) => {
   const [inviteCode, setInviteCode] = useState('');
   const [nickname, setNickname] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [agreed, setAgreed] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (inviteCode.length < 4 || nickname.length < 2) return;
+  const handleSubmit = () => {
+    if (!isValid || !agreed) return;
     
     setIsSubmitting(true);
     setTimeout(() => {
@@ -25,185 +25,156 @@ export const LoginPage = ({ onLogin }: LoginPageProps) => {
   const isValid = inviteCode.length >= 4 && nickname.length >= 2;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#F8F6F3] via-[#FAF8F5] to-[#F5F3EE] relative overflow-hidden">
-      {/* 全屏几何装饰层 */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {/* 左上角圆形装饰 */}
-        <motion.div
-          animate={{ rotate: 360 }}
-          transition={{ duration: 120, repeat: Infinity, ease: 'linear' }}
-          className="absolute -left-16 -top-16 w-72 h-72 opacity-[0.04]"
-        >
-          <svg viewBox="0 0 200 200" className="w-full h-full">
-            <circle cx="100" cy="100" r="90" fill="none" stroke="#2D2D2D" strokeWidth="1"/>
-            <circle cx="100" cy="100" r="70" fill="none" stroke="#2D2D2D" strokeWidth="0.5" strokeDasharray="4 4"/>
-            <circle cx="100" cy="100" r="50" fill="none" stroke="#2D2D2D" strokeWidth="0.5"/>
-          </svg>
-        </motion.div>
-
-        {/* 右下角方形装饰 */}
-        <motion.div
-          animate={{ rotate: -360 }}
-          transition={{ duration: 180, repeat: Infinity, ease: 'linear' }}
-          className="absolute -right-20 -bottom-20 w-80 h-80 opacity-[0.03]"
-        >
-          <svg viewBox="0 0 200 200" className="w-full h-full">
-            <rect x="20" y="20" width="160" height="160" fill="none" stroke="#2D2D2D" strokeWidth="1" rx="8"/>
-            <rect x="40" y="40" width="120" height="120" fill="none" stroke="#2D2D2D" strokeWidth="0.5" strokeDasharray="6 6" rx="4"/>
-          </svg>
-        </motion.div>
-
-        {/* 漂浮几何元素 */}
-        <motion.div
-          animate={{ y: [0, -15, 0], opacity: [0.15, 0.25, 0.15] }}
-          transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute top-1/4 left-8"
-        >
-          <Circle className="w-3 h-3 text-gray-400" />
-        </motion.div>
-
-        <motion.div
-          animate={{ y: [0, 12, 0], opacity: [0.1, 0.2, 0.1] }}
-          transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-          className="absolute top-1/3 right-12"
-        >
-          <Square className="w-2.5 h-2.5 text-gray-400 transform rotate-45" />
-        </motion.div>
-
-        <motion.div
-          animate={{ y: [0, -10, 0], opacity: [0.12, 0.22, 0.12] }}
-          transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
-          className="absolute top-1/2 left-16"
-        >
-          <Triangle className="w-2 h-2 text-gray-400" />
-        </motion.div>
-
-        <motion.div
-          animate={{ y: [0, 8, 0], opacity: [0.08, 0.18, 0.08] }}
-          transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut', delay: 3 }}
-          className="absolute bottom-1/3 right-8"
-        >
-          <Circle className="w-4 h-4 text-gray-300" />
-        </motion.div>
-
-        <motion.div
-          animate={{ y: [0, -12, 0], opacity: [0.1, 0.2, 0.1] }}
-          transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 1.5 }}
-          className="absolute top-2/3 left-10"
-        >
-          <Square className="w-2 h-2 text-gray-300" />
-        </motion.div>
-      </div>
-
-      {/* 全屏沉浸式内容 */}
-      <div className="relative z-10 min-h-screen flex flex-col px-6 py-12">
-        {/* 顶部氛围区 - 文艺简约 */}
+    <div className="min-h-screen bg-[#FEFCFB] flex flex-col">
+      {/* 顶部安全区适配 */}
+      <div className="h-[env(safe-area-inset-top)] bg-[#FEFCFB]" />
+      
+      {/* 主内容区 */}
+      <div className="flex-1 flex flex-col px-5">
+        {/* Logo区 */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16 mt-8"
+          transition={{ duration: 0.5 }}
+          className="pt-12 pb-8"
         >
-          <div className="inline-flex items-center gap-2 mb-6">
-            <div className="w-1 h-1 rounded-full bg-[#E07A5F]" />
-            <span className="text-xs font-light tracking-[0.3em] text-gray-500 uppercase">艺起逛杭州</span>
-            <div className="w-1 h-1 rounded-full bg-[#E07A5F]" />
+          <div className="flex items-center gap-2 mb-3">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#FF6154] to-[#FF2442] flex items-center justify-center shadow-lg shadow-red-100">
+              <span className="text-white text-lg font-bold">艺</span>
+            </div>
+            <span className="text-xl font-bold text-gray-800">艺起逛杭州</span>
           </div>
+          <p className="text-sm text-gray-500">发现杭州之美，支持你喜欢的领队</p>
         </motion.div>
 
-        {/* 中间主内容区 */}
-        <div className="flex-1 flex flex-col justify-center">
-          {/* 主标题 */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.1 }}
-            className="text-center mb-12"
-          >
-            <h1 className="text-3xl font-light text-gray-800 mb-3 tracking-wide">
-              欢迎来到
-            </h1>
-            <h2 className="text-2xl font-normal text-gray-600">
-              艺起逛杭州
-            </h2>
-          </motion.div>
-
-          {/* 沉浸式表单区 */}
-          <motion.form
-            initial={{ opacity: 0, y: 40, scale: 0.98 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            onSubmit={handleSubmit}
-            className="space-y-5"
-          >
-            <div className="space-y-2">
-              <label className="text-xs font-light text-gray-400 tracking-wider ml-1">
-                活动邀请码
-              </label>
+        {/* 表单区 */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="space-y-4"
+        >
+          {/* 邀请码输入 */}
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-gray-700">邀请码</label>
+            <div className="relative">
               <input
                 type="text"
                 value={inviteCode}
                 onChange={(e) => setInviteCode(e.target.value)}
                 placeholder="请输入参展码"
-                className="w-full px-5 py-4 bg-white/80 backdrop-blur-sm rounded-2xl text-gray-700 placeholder-gray-300 text-sm outline-none focus:ring-2 focus:ring-[#E07A5F]/20 transition-all border border-gray-100/50 focus:border-[#E07A5F]/30 shadow-sm"
+                maxLength={20}
+                className="w-full px-4 py-3.5 bg-white border border-gray-200 rounded-xl text-base text-gray-800 placeholder-gray-400 outline-none focus:border-red-300 focus:ring-2 focus:ring-red-100 transition-all"
               />
+              {inviteCode.length > 0 && (
+                <button
+                  onClick={() => setInviteCode('')}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 rounded-full bg-gray-200 flex items-center justify-center hover:bg-gray-300 transition-colors"
+                >
+                  <span className="text-gray-500 text-xs">✕</span>
+                </button>
+              )}
             </div>
+          </div>
 
-            <div className="space-y-2">
-              <label className="text-xs font-light text-gray-400 tracking-wider ml-1">
-                群昵称
-              </label>
+          {/* 昵称输入 */}
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-gray-700">昵称</label>
+            <div className="relative">
               <input
                 type="text"
                 value={nickname}
                 onChange={(e) => setNickname(e.target.value)}
                 placeholder="请输入你的昵称"
-                className="w-full px-5 py-4 bg-white/80 backdrop-blur-sm rounded-2xl text-gray-700 placeholder-gray-300 text-sm outline-none focus:ring-2 focus:ring-[#E07A5F]/20 transition-all border border-gray-100/50 focus:border-[#E07A5F]/30 shadow-sm"
+                maxLength={10}
+                className="w-full px-4 py-3.5 bg-white border border-gray-200 rounded-xl text-base text-gray-800 placeholder-gray-400 outline-none focus:border-red-300 focus:ring-2 focus:ring-red-100 transition-all"
               />
-            </div>
-
-            <motion.button
-              type="submit"
-              disabled={!isValid || isSubmitting}
-              whileTap={{ scale: 0.98 }}
-              className={`w-full py-4 rounded-2xl font-light text-sm tracking-wide flex items-center justify-center gap-2 transition-all duration-300 ${
-                isValid && !isSubmitting
-                  ? 'bg-gray-800 text-white hover:bg-gray-900 shadow-lg shadow-gray-200'
-                  : 'bg-gray-100 text-gray-300'
-              }`}
-            >
-              {isSubmitting ? (
-                <>
-                  <motion.div
-                    animate={{ rotate: 360 }}
-                    transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-                    className="w-4 h-4 border border-white/30 border-t-white rounded-full"
-                  />
-                  <span>正在进入...</span>
-                </>
-              ) : (
-                <>
-                  <span>进入点赞榜</span>
-                  <ArrowRight className="w-4 h-4" />
-                </>
+              {nickname.length > 0 && (
+                <button
+                  onClick={() => setNickname('')}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 rounded-full bg-gray-200 flex items-center justify-center hover:bg-gray-300 transition-colors"
+                >
+                  <span className="text-gray-500 text-xs">✕</span>
+                </button>
               )}
-            </motion.button>
-          </motion.form>
-        </div>
+            </div>
+          </div>
 
-        {/* 底部说明 */}
+          {/* 协议勾选 */}
+          <div 
+            className="flex items-start gap-3 pt-1 cursor-pointer"
+            onClick={() => setAgreed(!agreed)}
+          >
+            <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all mt-0.5 ${
+              agreed 
+                ? 'bg-red-500 border-red-500' 
+                : 'border-gray-300 bg-white'
+            }`}>
+              <AnimatePresence>
+                {agreed && (
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    exit={{ scale: 0 }}
+                    transition={{ duration: 0.15 }}
+                  >
+                    <Check className="w-3 h-3 text-white" strokeWidth={3} />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+            <p className="text-xs text-gray-500 leading-relaxed flex-1">
+              我已阅读并同意
+              <span className="text-red-500">《用户协议》</span>
+              和
+              <span className="text-red-500">《隐私政策》</span>
+            </p>
+          </div>
+
+          {/* 登录按钮 */}
+          <motion.button
+            onClick={handleSubmit}
+            disabled={!isValid || !agreed || isSubmitting}
+            whileTap={{ scale: 0.98 }}
+            className={`w-full py-3.5 rounded-xl font-medium text-sm flex items-center justify-center gap-2 transition-all mt-2 ${
+              isValid && agreed && !isSubmitting
+                ? 'bg-gradient-to-r from-[#FF6154] to-[#FF2442] text-white shadow-lg shadow-red-200 active:shadow-md'
+                : 'bg-gray-100 text-gray-400'
+            }`}
+          >
+            {isSubmitting ? (
+              <>
+                <motion.div
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 0.8, repeat: Infinity, ease: 'linear' }}
+                  className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full"
+                />
+                <span>登录中...</span>
+              </>
+            ) : (
+              <>
+                <span>进入活动</span>
+                <ArrowRight className="w-4 h-4" />
+              </>
+            )}
+          </motion.button>
+        </motion.div>
+
+        {/* 底部装饰 */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.5 }}
-          className="text-center mt-12"
+          transition={{ delay: 0.3 }}
+          className="mt-auto pt-8 pb-4"
         >
-          <div className="inline-flex items-center gap-1.5 text-xs text-gray-400/60">
-            <Lock className="w-3 h-3" />
-            <span>轻登录 · 仅活动期间使用</span>
-          </div>
+          <p className="text-center text-xs text-gray-400">
+            登录即表示你同意我们的条款和条件
+          </p>
         </motion.div>
       </div>
+
+      {/* 底部安全区适配 */}
+      <div className="h-[env(safe-area-inset-bottom)] bg-[#FEFCFB]" />
     </div>
   );
 };
