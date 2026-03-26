@@ -1,17 +1,16 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import type { Database } from '../../types/database';
-import { LeaderboardCard } from './LeaderboardCard';
 import { mockLeaders } from '../../data/leaderboardData';
-
-type Leader = Database['public']['Tables']['leaders']['Row'];
+import { LeaderboardCard } from './LeaderboardCard';
 
 interface LeaderboardListProps {
-  onLike: (id: string) => Promise<boolean>;
-  hasLikedMap: Record<string, boolean>;
+  leaders: any[];
+  onLike: (leaderId: string) => void;
+  hasLikedLeader: (leaderId: string) => boolean;
 }
 
-export const LeaderboardList = ({ onLike, hasLikedMap }: LeaderboardListProps) => {
-  const leaders = mockLeaders.sort((a, b) => b.likes - a.likes);
+export const LeaderboardList = ({ leaders, onLike, hasLikedLeader }: LeaderboardListProps) => {
+  const displayLeaders = leaders.length > 0 ? leaders : mockLeaders;
+  const sortedLeaders = [...displayLeaders].sort((a, b) => b.likes - a.likes);
 
   return (
     <motion.div
@@ -21,13 +20,13 @@ export const LeaderboardList = ({ onLike, hasLikedMap }: LeaderboardListProps) =
       className="px-2 py-4"
     >
       <AnimatePresence mode="popLayout">
-        {leaders.map((leader, index) => (
+        {sortedLeaders.map((leader, index) => (
           <LeaderboardCard
             key={leader.id}
             leader={leader}
             rank={index + 1}
+            hasLiked={hasLikedLeader(leader.id)}
             onLike={() => onLike(leader.id)}
-            hasLiked={hasLikedMap[leader.id] || false}
           />
         ))}
       </AnimatePresence>

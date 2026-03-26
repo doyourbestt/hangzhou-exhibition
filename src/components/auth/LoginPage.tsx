@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Sparkles, User, Hash, CheckCircle, AlertCircle } from 'lucide-react';
 
 interface LoginPageProps {
-  onLogin: (inviteCode: string, nickname: string) => Promise<void>;
+  onLogin: (inviteCode: string, nickname: string) => void;
 }
 
 export const LoginPage = ({ onLogin }: LoginPageProps) => {
@@ -31,7 +31,7 @@ export const LoginPage = ({ onLogin }: LoginPageProps) => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!validateForm()) return;
@@ -39,15 +39,10 @@ export const LoginPage = ({ onLogin }: LoginPageProps) => {
     setIsSubmitting(true);
     setErrors({});
     
-    try {
-      await onLogin(inviteCode.trim(), nickname.trim());
-    } catch (error: any) {
-      console.error('Login error:', error);
-      setErrors({
-        general: error?.message || '登录失败，请检查网络连接或联系管理员'
-      });
+    setTimeout(() => {
+      onLogin(inviteCode.trim(), nickname.trim());
       setIsSubmitting(false);
-    }
+    }, 800);
   };
 
   return (

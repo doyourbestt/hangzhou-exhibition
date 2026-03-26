@@ -1,16 +1,20 @@
 import { motion } from 'framer-motion';
-import type { Leader } from '../../types/user';
 import { LikeButton } from './LikeButton';
 import { TopRankBadge } from './TopRankBadge';
 
 interface LeaderboardCardProps {
-  leader: Leader;
+  leader: {
+    id: string;
+    name: string;
+    avatar: string;
+    likes: number;
+  };
   rank: number;
-  onLike: (id: string) => void;
   hasLiked: boolean;
+  onLike: () => void;
 }
 
-export const LeaderboardCard = ({ leader, rank, onLike, hasLiked }: LeaderboardCardProps) => {
+export const LeaderboardCard = ({ leader, rank, hasLiked, onLike }: LeaderboardCardProps) => {
   return (
     <motion.div
       layout
@@ -48,7 +52,7 @@ export const LeaderboardCard = ({ leader, rank, onLike, hasLiked }: LeaderboardC
         </div>
 
         <LikeButton
-          onLike={() => onLike(leader.id)}
+          onLike={onLike}
           likes={leader.likes}
           hasLiked={hasLiked}
         />
