@@ -8,8 +8,6 @@ type TabType = 'leaderboard' | 'my-supports';
 
 function App() {
   const [currentUser, setCurrentUser] = useState<any>(null);
-  const [leaders, setLeaders] = useState<any[]>([]);
-  const [userLikedIds, setUserLikedIds] = useState<string[]>([]);
   const [activeTab, setActiveTab] = useState<TabType>('leaderboard');
 
   const handleLogin = (inviteCode: string, nickname: string) => {
@@ -22,19 +20,6 @@ function App() {
     });
   };
 
-  const handleLike = (leaderId: string) => {
-    if (!currentUser) return;
-    setUserLikedIds(prev => [...prev, leaderId]);
-    setLeaders(prev => {
-      const updated = prev.map(l => l.id === leaderId ? { ...l, likes: l.likes + 1 } : l);
-      return updated.sort((a, b) => b.likes - a.likes);
-    });
-  };
-
-  const hasLikedLeader = (leaderId: string) => userLikedIds.includes(leaderId);
-
-  const likedLeaders = leaders.filter(l => userLikedIds.includes(l.id));
-
   if (!currentUser) {
     return <LoginPage onLogin={handleLogin} />;
   }
@@ -42,17 +27,9 @@ function App() {
   return (
     <>
       {activeTab === 'leaderboard' ? (
-        <LeaderboardPage
-          leaders={leaders}
-          onLike={handleLike}
-          hasLikedLeader={hasLikedLeader}
-        />
+        <LeaderboardPage />
       ) : (
-        <MySupportsPage
-          likedLeaders={likedLeaders}
-          currentUser={currentUser}
-          totalSupports={likedLeaders.length}
-        />
+        <MySupportsPage currentUser={currentUser} />
       )}
       
       <BottomTab

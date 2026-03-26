@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Sparkles, User, Hash, CheckCircle, AlertCircle } from 'lucide-react';
+import { Sparkles, ArrowRight, Lock } from 'lucide-react';
 
 interface LoginPageProps {
   onLogin: (inviteCode: string, nickname: string) => void;
@@ -10,199 +10,153 @@ export const LoginPage = ({ onLogin }: LoginPageProps) => {
   const [inviteCode, setInviteCode] = useState('');
   const [nickname, setNickname] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [errors, setErrors] = useState<{ inviteCode?: string; nickname?: string; general?: string }>({});
-
-  const validateForm = (): boolean => {
-    const newErrors: { inviteCode?: string; nickname?: string; general?: string } = {};
-    
-    if (!inviteCode.trim()) {
-      newErrors.inviteCode = '请输入活动邀请码';
-    } else if (inviteCode.length < 4) {
-      newErrors.inviteCode = '邀请码至少4个字符';
-    }
-    
-    if (!nickname.trim()) {
-      newErrors.nickname = '请输入群昵称';
-    } else if (nickname.length < 2) {
-      newErrors.nickname = '昵称至少2个字符';
-    }
-    
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (!validateForm()) return;
+    if (inviteCode.length < 4 || nickname.length < 2) return;
     
     setIsSubmitting(true);
-    setErrors({});
-    
     setTimeout(() => {
       onLogin(inviteCode.trim(), nickname.trim());
       setIsSubmitting(false);
     }, 800);
   };
 
-  return (
-    <div className="min-h-screen bg-gradient-to-b from-warm-white to-soft-cream flex items-center justify-center p-6">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="w-full max-w-md"
-      >
-        <div className="text-center mb-8">
-          <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ delay: 0.2 }}
-            className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-gentle-coral to-warm-terracotta mb-4"
-          >
-            <Sparkles className="w-8 h-8 text-white" />
-          </motion.div>
-          
-          <motion.h1
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="text-2xl font-semibold text-gray-800 mb-2"
-          >
-            欢迎来到艺起逛杭州
-          </motion.h1>
-          
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4 }}
-            className="text-sm text-gray-500"
-          >
-            请先完成轻登录，开始你的支持之旅
-          </motion.p>
-        </div>
+  const isValid = inviteCode.length >= 4 && nickname.length >= 2;
 
-        <motion.form
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-[#FAF8F5] via-[#F5F3EE] to-[#FAF9F6] relative overflow-hidden">
+      {/* 装饰元素 */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <motion.div
+          animate={{ rotate: 360 }}
+          transition={{ duration: 60, repeat: Infinity, ease: 'linear' }}
+          className="absolute -top-20 -right-20 w-64 h-64 opacity-[0.03]"
+        >
+          <svg viewBox="0 0 200 200" className="w-full h-full">
+            <circle cx="100" cy="100" r="80" fill="none" stroke="#E07A5F" strokeWidth="0.5" strokeDasharray="4 4"/>
+            <circle cx="100" cy="100" r="60" fill="none" stroke="#E07A5F" strokeWidth="0.5"/>
+            <circle cx="100" cy="100" r="40" fill="none" stroke="#E07A5F" strokeWidth="0.5" strokeDasharray="8 8"/>
+          </svg>
+        </motion.div>
+        
+        <motion.div
+          animate={{ y: [0, -10, 0] }}
+          transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+          className="absolute top-32 left-6 w-2 h-2 rounded-full bg-[#E8D5A3] opacity-40"
+        />
+        <motion.div
+          animate={{ y: [0, 8, 0] }}
+          transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
+          className="absolute top-48 right-10 w-1.5 h-1.5 rounded-full bg-[#D4715E] opacity-30"
+        />
+        <motion.div
+          animate={{ y: [0, -6, 0] }}
+          transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
+          className="absolute top-64 left-12 w-1 h-1 rounded-full bg-[#C8C8C8] opacity-50"
+        />
+      </div>
+
+      <div className="relative z-10 px-5 pt-12 pb-8">
+        {/* 顶部氛围区 */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-8"
+        >
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/60 backdrop-blur-sm rounded-full shadow-sm mb-6">
+            <Sparkles className="w-3.5 h-3.5 text-[#E07A5F]" />
+            <span className="text-xs font-medium text-gray-600 tracking-wide">艺起逛杭州</span>
+          </div>
+        </motion.div>
+
+        {/* 主标题区 */}
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
-          onSubmit={handleSubmit}
-          className="bg-white rounded-3xl shadow-soft-card p-6 space-y-5"
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="text-center mb-10"
         >
-          {errors.general && (
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="bg-red-50 border border-red-200 rounded-xl p-3 flex items-center gap-2"
-            >
-              <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0" />
-              <p className="text-sm text-red-600">{errors.general}</p>
-            </motion.div>
-          )}
+          <h1 className="text-2xl font-semibold text-gray-800 mb-2">欢迎来到艺起逛杭州</h1>
+          <p className="text-sm text-gray-500">为心仪的领队队长送上你的支持</p>
+        </motion.div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              <div className="flex items-center gap-2">
-                <Hash className="w-4 h-4 text-gray-400" />
-                <span>活动邀请码</span>
-              </div>
+        {/* 登录表单卡片 */}
+        <motion.form
+          initial={{ opacity: 0, y: 30, scale: 0.95 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          onSubmit={handleSubmit}
+          className="bg-white rounded-3xl shadow-lg shadow-gray-100/50 p-6 space-y-4"
+        >
+          <div className="space-y-1.5">
+            <label className="text-xs font-medium text-gray-500 tracking-wide ml-1">
+              活动邀请码
             </label>
             <input
               type="text"
               value={inviteCode}
-              onChange={(e) => {
-                setInviteCode(e.target.value);
-                if (errors.inviteCode) {
-                  setErrors(prev => ({ ...prev, inviteCode: undefined }));
-                }
-              }}
-              placeholder="请输入参展码/邀请码"
-              disabled={isSubmitting}
-              className={`w-full px-4 py-3 rounded-xl border ${
-                errors.inviteCode 
-                  ? 'border-red-300 bg-red-50' 
-                  : 'border-gray-200'
-              } focus:outline-none focus:ring-2 focus:ring-gentle-coral focus:border-transparent transition-all disabled:opacity-50`}
+              onChange={(e) => setInviteCode(e.target.value)}
+              placeholder="请输入参展码"
+              className="w-full px-4 py-3 bg-[#FAF8F5] rounded-xl text-gray-700 placeholder-gray-400 text-sm outline-none focus:ring-2 focus:ring-[#E07A5F]/20 transition-all border border-transparent focus:border-[#E07A5F]/30"
             />
-            {errors.inviteCode && (
-              <motion.p
-                initial={{ opacity: 0, y: -5 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="text-xs text-red-500 mt-1"
-              >
-                {errors.inviteCode}
-              </motion.p>
-            )}
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              <div className="flex items-center gap-2">
-                <User className="w-4 h-4 text-gray-400" />
-                <span>群昵称</span>
-              </div>
+          <div className="space-y-1.5">
+            <label className="text-xs font-medium text-gray-500 tracking-wide ml-1">
+              群昵称
             </label>
             <input
               type="text"
               value={nickname}
-              onChange={(e) => {
-                setNickname(e.target.value);
-                if (errors.nickname) {
-                  setErrors(prev => ({ ...prev, nickname: undefined }));
-                }
-              }}
-              placeholder="请输入你在群里的昵称"
-              disabled={isSubmitting}
-              className={`w-full px-4 py-3 rounded-xl border ${
-                errors.nickname 
-                  ? 'border-red-300 bg-red-50' 
-                  : 'border-gray-200'
-              } focus:outline-none focus:ring-2 focus:ring-gentle-coral focus:border-transparent transition-all disabled:opacity-50`}
+              onChange={(e) => setNickname(e.target.value)}
+              placeholder="请输入你的昵称"
+              className="w-full px-4 py-3 bg-[#FAF8F5] rounded-xl text-gray-700 placeholder-gray-400 text-sm outline-none focus:ring-2 focus:ring-[#E07A5F]/20 transition-all border border-transparent focus:border-[#E07A5F]/30"
             />
-            {errors.nickname && (
-              <motion.p
-                initial={{ opacity: 0, y: -5 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="text-xs text-red-500 mt-1"
-              >
-                {errors.nickname}
-              </motion.p>
-            )}
           </div>
 
           <motion.button
             type="submit"
-            disabled={isSubmitting}
+            disabled={!isValid || isSubmitting}
             whileTap={{ scale: 0.98 }}
-            className="w-full py-3.5 bg-gradient-to-r from-gentle-coral to-warm-terracotta text-white font-medium rounded-xl shadow-lg hover:shadow-xl transition-shadow disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            className={`w-full py-3.5 rounded-xl font-medium text-sm flex items-center justify-center gap-2 transition-all ${
+              isValid && !isSubmitting
+                ? 'bg-gradient-to-r from-[#E07A5F] to-[#D4715E] text-white shadow-lg shadow-[#E07A5F]/20'
+                : 'bg-gray-100 text-gray-400'
+            }`}
           >
             {isSubmitting ? (
               <>
                 <motion.div
                   animate={{ rotate: 360 }}
                   transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-                  className="w-5 h-5 border-2 border-white border-t-transparent rounded-full"
+                  className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full"
                 />
-                <span>正在加入...</span>
+                <span>正在进入...</span>
               </>
             ) : (
               <>
-                <CheckCircle className="w-5 h-5" />
-                <span>进入活动</span>
+                <span>进入点赞榜</span>
+                <ArrowRight className="w-4 h-4" />
               </>
             )}
           </motion.button>
         </motion.form>
 
-        <motion.p
+        {/* 底部说明 */}
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.7 }}
-          className="text-center text-xs text-gray-400 mt-6"
+          transition={{ delay: 0.4 }}
+          className="mt-8 text-center"
         >
-          轻登录 · 仅活动期间使用 · 保护您的隐私
-        </motion.p>
-      </motion.div>
+          <div className="inline-flex items-center gap-1.5 text-xs text-gray-400">
+            <Lock className="w-3 h-3" />
+            <span>轻登录 · 仅活动期间使用</span>
+          </div>
+        </motion.div>
+      </div>
     </div>
   );
 };

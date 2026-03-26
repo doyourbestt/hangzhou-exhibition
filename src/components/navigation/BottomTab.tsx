@@ -9,19 +9,17 @@ interface BottomTabProps {
 export const BottomTab = ({ activeTab, onTabChange }: BottomTabProps) => {
   return (
     <motion.nav
-      initial={{ y: 100, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ delay: 0.3, duration: 0.4 }}
-      className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 shadow-lg"
+      initial={{ y: 100 }}
+      animate={{ y: 0 }}
+      transition={{ delay: 0.3, type: 'spring', stiffness: 200 }}
+      className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-lg border-t border-gray-100 shadow-lg"
     >
-      <div className="max-w-md mx-auto flex items-center justify-around py-2">
+      <div className="max-w-md mx-auto flex items-center justify-around py-2.5">
         <motion.button
           whileTap={{ scale: 0.95 }}
           onClick={() => onTabChange('leaderboard')}
-          className={`flex flex-col items-center gap-1 px-8 py-2 rounded-xl transition-colors ${
-            activeTab === 'leaderboard'
-              ? 'text-rose-500'
-              : 'text-gray-400'
+          className={`flex flex-col items-center gap-1 px-8 py-2 rounded-xl transition-colors relative ${
+            activeTab === 'leaderboard' ? 'text-rose-500' : 'text-gray-400'
           }`}
         >
           <motion.div
@@ -37,8 +35,8 @@ export const BottomTab = ({ activeTab, onTabChange }: BottomTabProps) => {
           <span className="text-xs font-medium">点赞榜</span>
           {activeTab === 'leaderboard' && (
             <motion.div
-              layoutId="activeTab"
-              className="absolute -bottom-0.5 w-12 h-0.5 bg-rose-500 rounded-full"
+              layoutId="activeTabIndicator"
+              className="absolute -bottom-1 w-8 h-0.5 bg-rose-500 rounded-full"
             />
           )}
         </motion.button>
@@ -47,9 +45,7 @@ export const BottomTab = ({ activeTab, onTabChange }: BottomTabProps) => {
           whileTap={{ scale: 0.95 }}
           onClick={() => onTabChange('my-supports')}
           className={`flex flex-col items-center gap-1 px-8 py-2 rounded-xl transition-colors relative ${
-            activeTab === 'my-supports'
-              ? 'text-rose-500'
-              : 'text-gray-400'
+            activeTab === 'my-supports' ? 'text-rose-500' : 'text-gray-400'
           }`}
         >
           <motion.div
@@ -61,8 +57,8 @@ export const BottomTab = ({ activeTab, onTabChange }: BottomTabProps) => {
           <span className="text-xs font-medium">我的支持</span>
           {activeTab === 'my-supports' && (
             <motion.div
-              layoutId="activeTab"
-              className="absolute -bottom-0.5 w-12 h-0.5 bg-rose-500 rounded-full"
+              layoutId="activeTabIndicator"
+              className="absolute -bottom-1 w-8 h-0.5 bg-rose-500 rounded-full"
             />
           )}
         </motion.button>
