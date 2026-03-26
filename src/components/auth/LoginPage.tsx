@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, Check } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Check, Heart } from 'lucide-react';
 
 interface LoginPageProps {
   onLogin: (inviteCode: string, nickname: string) => void;
@@ -25,156 +25,118 @@ export const LoginPage = ({ onLogin }: LoginPageProps) => {
   const isValid = inviteCode.length >= 4 && nickname.length >= 2;
 
   return (
-    <div className="min-h-screen bg-[#FEFCFB] flex flex-col">
-      {/* 顶部安全区适配 */}
-      <div className="h-[env(safe-area-inset-top)] bg-[#FEFCFB]" />
-      
-      {/* 主内容区 */}
-      <div className="flex-1 flex flex-col px-5">
-        {/* Logo区 */}
+    <div className="min-h-screen bg-gradient-to-b from-[#FDFCFB] to-[#F7F5F3]">
+      <div className="max-w-sm mx-auto px-5 pt-16 pb-10">
+        {/* 1）顶部品牌区 */}
         <motion.div
-          initial={{ opacity: 0, y: -20 }}
+          initial={{ opacity: 0, y: -15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="pt-12 pb-8"
+          className="text-center mb-10"
         >
-          <div className="flex items-center gap-2 mb-3">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#FF6154] to-[#FF2442] flex items-center justify-center shadow-lg shadow-red-100">
-              <span className="text-white text-lg font-bold">艺</span>
-            </div>
-            <span className="text-xl font-bold text-gray-800">艺起逛杭州</span>
+          <div className="inline-flex items-center gap-2 mb-2">
+            <Heart className="w-3.5 h-3.5 text-[#E07A5F]" fill="#E07A5F" />
+            <span className="text-xs text-gray-400 tracking-wider">艺起逛杭州</span>
           </div>
-          <p className="text-sm text-gray-500">发现杭州之美，支持你喜欢的领队</p>
         </motion.div>
 
-        {/* 表单区 */}
+        {/* 2）欢迎文案区 */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="space-y-4"
+          className="text-center mb-8"
         >
-          {/* 邀请码输入 */}
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-700">邀请码</label>
-            <div className="relative">
-              <input
-                type="text"
-                value={inviteCode}
-                onChange={(e) => setInviteCode(e.target.value)}
-                placeholder="请输入参展码"
-                maxLength={20}
-                className="w-full px-4 py-3.5 bg-white border border-gray-200 rounded-xl text-base text-gray-800 placeholder-gray-400 outline-none focus:border-red-300 focus:ring-2 focus:ring-red-100 transition-all"
-              />
-              {inviteCode.length > 0 && (
-                <button
-                  onClick={() => setInviteCode('')}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 rounded-full bg-gray-200 flex items-center justify-center hover:bg-gray-300 transition-colors"
-                >
-                  <span className="text-gray-500 text-xs">✕</span>
-                </button>
-              )}
-            </div>
+          <h1 className="text-2xl font-medium text-gray-800 mb-2">
+            欢迎来到艺起逛杭州
+          </h1>
+          <p className="text-sm text-gray-400">
+            完成轻登录，开始你的支持之旅
+          </p>
+        </motion.div>
+
+        {/* 3）登录表单卡片区 */}
+        <motion.div
+          initial={{ opacity: 0, y: 20, scale: 0.98 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="bg-white rounded-3xl shadow-sm shadow-gray-100/80 p-5 mb-6"
+        >
+          {/* A. 邀请码输入 */}
+          <div className="mb-4">
+            <label className="block text-xs text-gray-500 mb-2 ml-1">邀请码</label>
+            <input
+              type="text"
+              value={inviteCode}
+              onChange={(e) => setInviteCode(e.target.value)}
+              placeholder="请输入参展码"
+              className="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-xl text-sm text-gray-700 placeholder-gray-300 outline-none focus:ring-2 focus:ring-[#E07A5F]/20 focus:border-[#E07A5F]/30 transition-all"
+            />
           </div>
 
-          {/* 昵称输入 */}
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-700">昵称</label>
-            <div className="relative">
-              <input
-                type="text"
-                value={nickname}
-                onChange={(e) => setNickname(e.target.value)}
-                placeholder="请输入你的昵称"
-                maxLength={10}
-                className="w-full px-4 py-3.5 bg-white border border-gray-200 rounded-xl text-base text-gray-800 placeholder-gray-400 outline-none focus:border-red-300 focus:ring-2 focus:ring-red-100 transition-all"
-              />
-              {nickname.length > 0 && (
-                <button
-                  onClick={() => setNickname('')}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 rounded-full bg-gray-200 flex items-center justify-center hover:bg-gray-300 transition-colors"
-                >
-                  <span className="text-gray-500 text-xs">✕</span>
-                </button>
-              )}
-            </div>
+          {/* B. 群昵称输入 */}
+          <div className="mb-5">
+            <label className="block text-xs text-gray-500 mb-2 ml-1">群昵称</label>
+            <input
+              type="text"
+              value={nickname}
+              onChange={(e) => setNickname(e.target.value)}
+              placeholder="请输入你在群里的昵称"
+              className="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-xl text-sm text-gray-700 placeholder-gray-300 outline-none focus:ring-2 focus:ring-[#E07A5F]/20 focus:border-[#E07A5F]/30 transition-all"
+            />
           </div>
 
-          {/* 协议勾选 */}
+          {/* C. 协议勾选 */}
           <div 
-            className="flex items-start gap-3 pt-1 cursor-pointer"
+            className="flex items-start gap-2.5 mb-5 cursor-pointer select-none"
             onClick={() => setAgreed(!agreed)}
           >
-            <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all mt-0.5 ${
+            <div className={`w-4 h-4 rounded-full border flex items-center justify-center transition-all mt-0.5 flex-shrink-0 ${
               agreed 
-                ? 'bg-red-500 border-red-500' 
+                ? 'bg-[#E07A5F] border-[#E07A5F]' 
                 : 'border-gray-300 bg-white'
             }`}>
-              <AnimatePresence>
-                {agreed && (
-                  <motion.div
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    exit={{ scale: 0 }}
-                    transition={{ duration: 0.15 }}
-                  >
-                    <Check className="w-3 h-3 text-white" strokeWidth={3} />
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              {agreed && <Check className="w-2.5 h-2.5 text-white" strokeWidth={3} />}
             </div>
-            <p className="text-xs text-gray-500 leading-relaxed flex-1">
+            <p className="text-xs text-gray-400 leading-relaxed">
               我已阅读并同意
-              <span className="text-red-500">《用户协议》</span>
-              和
-              <span className="text-red-500">《隐私政策》</span>
+              <span className="text-[#E07A5F]">《微信群群规》</span>
             </p>
           </div>
 
-          {/* 登录按钮 */}
-          <motion.button
+          {/* D. 主按钮 */}
+          <button
             onClick={handleSubmit}
             disabled={!isValid || !agreed || isSubmitting}
-            whileTap={{ scale: 0.98 }}
-            className={`w-full py-3.5 rounded-xl font-medium text-sm flex items-center justify-center gap-2 transition-all mt-2 ${
+            className={`w-full py-3.5 rounded-xl text-sm font-medium transition-all flex items-center justify-center gap-2 ${
               isValid && agreed && !isSubmitting
-                ? 'bg-gradient-to-r from-[#FF6154] to-[#FF2442] text-white shadow-lg shadow-red-200 active:shadow-md'
+                ? 'bg-[#E07A5F] text-white shadow-md shadow-[#E07A5F]/20 active:scale-[0.98]'
                 : 'bg-gray-100 text-gray-400'
             }`}
           >
             {isSubmitting ? (
               <>
-                <motion.div
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 0.8, repeat: Infinity, ease: 'linear' }}
-                  className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full"
-                />
-                <span>登录中...</span>
+                <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                <span>正在进入...</span>
               </>
             ) : (
-              <>
-                <span>进入活动</span>
-                <ArrowRight className="w-4 h-4" />
-              </>
+              <span>进入点赞榜</span>
             )}
-          </motion.button>
+          </button>
         </motion.div>
 
-        {/* 底部装饰 */}
+        {/* 4）底部轻说明区 */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.3 }}
-          className="mt-auto pt-8 pb-4"
+          transition={{ delay: 0.4 }}
+          className="text-center"
         >
-          <p className="text-center text-xs text-gray-400">
-            登录即表示你同意我们的条款和条件
+          <p className="text-xs text-gray-400">
+            仅用于本次活动互动 · 保护你的隐私
           </p>
         </motion.div>
       </div>
-
-      {/* 底部安全区适配 */}
-      <div className="h-[env(safe-area-inset-bottom)] bg-[#FEFCFB]" />
     </div>
   );
 };
