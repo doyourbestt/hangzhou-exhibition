@@ -97,7 +97,7 @@ export const LoginPage = ({ onLogin }: LoginPageProps) => {
                 value={inviteCode}
                 onChange={(e) => setInviteCode(e.target.value)}
                 placeholder="请输入参展码"
-                className="w-full px-6 h-20 text-lg text-gray-800 bg-gray-50 rounded-2xl outline-none transition-all border-2 border-gray-200 focus:border-[#E07A5F]"
+                className="w-full px-6 h-[80px] text-lg text-gray-800 bg-gray-50 rounded-2xl outline-none transition-all border-2 border-gray-200 focus:border-[#E07A5F]"
               />
             </div>
 
@@ -109,7 +109,7 @@ export const LoginPage = ({ onLogin }: LoginPageProps) => {
                 value={nickname}
                 onChange={(e) => setNickname(e.target.value)}
                 placeholder="请输入你的昵称"
-                className="w-full px-6 h-20 text-lg text-gray-800 bg-gray-50 rounded-2xl outline-none transition-all border-2 border-gray-200 focus:border-[#E07A5F]"
+                className="w-full px-6 h-[80px] text-lg text-gray-800 bg-gray-50 rounded-2xl outline-none transition-all border-2 border-gray-200 focus:border-[#E07A5F]"
               />
             </div>
 
