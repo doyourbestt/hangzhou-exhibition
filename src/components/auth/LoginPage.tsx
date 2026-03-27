@@ -89,7 +89,7 @@ export const LoginPage = ({ onLogin }: LoginPageProps) => {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="space-y-6"
           >
-            {/* 邀请码 */}
+            {/* 邀请码 - 高度80px */}
             <div>
               <label className="block text-base font-medium text-gray-700 mb-3">邀请码</label>
               <input
@@ -97,14 +97,11 @@ export const LoginPage = ({ onLogin }: LoginPageProps) => {
                 value={inviteCode}
                 onChange={(e) => setInviteCode(e.target.value)}
                 placeholder="请输入参展码"
-                className="w-full px-6 py-6 text-lg text-gray-800 bg-gray-50 rounded-2xl outline-none transition-all"
-                style={{
-                  boxShadow: 'inset 0 0 0 40px #f5f5f5'
-                }}
+                className="w-full px-6 h-20 text-lg text-gray-800 bg-gray-50 rounded-2xl outline-none transition-all border-2 border-gray-200 focus:border-[#E07A5F]"
               />
             </div>
 
-            {/* 昵称 */}
+            {/* 昵称 - 高度80px */}
             <div>
               <label className="block text-base font-medium text-gray-700 mb-3">群昵称</label>
               <input
@@ -112,16 +109,13 @@ export const LoginPage = ({ onLogin }: LoginPageProps) => {
                 value={nickname}
                 onChange={(e) => setNickname(e.target.value)}
                 placeholder="请输入你的昵称"
-                className="w-full px-6 py-6 text-lg text-gray-800 bg-gray-50 rounded-2xl outline-none transition-all"
-                style={{
-                  boxShadow: 'inset 0 0 0 40px #f5f5f5'
-                }}
+                className="w-full px-6 h-20 text-lg text-gray-800 bg-gray-50 rounded-2xl outline-none transition-all border-2 border-gray-200 focus:border-[#E07A5F]"
               />
             </div>
 
             {/* 协议 - 勾选框始终显示 */}
             <div 
-              className="flex items-start gap-4 cursor-pointer select-none"
+              className="flex items-start gap-4 cursor-pointer select-none py-2"
               onClick={() => setAgreed(!agreed)}
             >
               <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all mt-0.5 flex-shrink-0 ${
@@ -137,11 +131,11 @@ export const LoginPage = ({ onLogin }: LoginPageProps) => {
               </p>
             </div>
 
-            {/* 主按钮 - 高度和字体加倍 */}
+            {/* 主按钮 - 高度90px */}
             <button
               onClick={handleSubmit}
               disabled={!isValid || !agreed || isSubmitting}
-              className={`w-full py-6 text-xl font-bold rounded-full transition-all flex items-center justify-center gap-2 ${
+              className={`w-full h-[90px] text-xl font-bold rounded-full transition-all flex items-center justify-center gap-2 ${
                 isValid && agreed && !isSubmitting
                   ? 'bg-black text-white active:scale-[0.98]'
                   : 'bg-gray-100 text-gray-400'
