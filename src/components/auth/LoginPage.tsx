@@ -45,11 +45,11 @@ export const LoginPage = ({ onLogin }: LoginPageProps) => {
           transition={{ duration: 0.8 }}
           className="relative z-10 text-center px-12"
         >
-          <div className="w-20 h-20 mx-auto mb-8 mt-[-40px] bg-gradient-to-br from-[#E07A5F] to-[#D4715E] rounded-2xl flex items-center justify-center shadow-lg shadow-[#E07A5F]/20">
-            <span className="text-white text-3xl font-bold">艺</span>
+          <div className="w-24 h-24 mx-auto mb-10 mt-[-80px] bg-gradient-to-br from-[#E07A5F] to-[#D4715E] rounded-3xl flex items-center justify-center shadow-lg shadow-[#E07A5F]/20">
+            <span className="text-white text-4xl font-bold">艺</span>
           </div>
-          <h2 className="text-3xl font-bold text-gray-800 mb-4">艺起逛杭州</h2>
-          <p className="text-base text-gray-500 leading-relaxed">
+          <h2 className="text-4xl font-bold text-gray-800 mb-6">艺起逛杭州</h2>
+          <p className="text-xl text-gray-500 leading-relaxed">
             发现杭州之美<br/>
             支持你喜欢的领队队长
           </p>
@@ -57,17 +57,17 @@ export const LoginPage = ({ onLogin }: LoginPageProps) => {
       </div>
 
       {/* 右侧登录区 */}
-      <div className="w-full md:w-1/2 flex items-center justify-center p-8">
-        <div className="w-full max-w-[352px]">
+      <div className="w-full md:w-1/2 flex items-center justify-center p-12">
+        <div className="w-full max-w-[400px]">
           {/* Logo - 移动端显示 */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="md:hidden text-center mb-12 mt-[-40px]"
+            className="md:hidden text-center mb-16"
           >
-            <div className="inline-flex items-center gap-2">
-              <Heart className="w-4 h-4 text-[#E07A5F]" fill="#E07A5F" />
-              <span className="text-sm text-gray-500 tracking-wider">艺起逛杭州</span>
+            <div className="inline-flex items-center gap-3">
+              <Heart className="w-5 h-5 text-[#E07A5F]" fill="#E07A5F" />
+              <span className="text-base text-gray-500 tracking-wider">艺起逛杭州</span>
             </div>
           </motion.div>
 
@@ -76,10 +76,10 @@ export const LoginPage = ({ onLogin }: LoginPageProps) => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="mb-10"
+            className="mb-12"
           >
-            <h1 className="text-2xl font-bold text-gray-900 mb-2">欢迎回来</h1>
-            <p className="text-sm text-gray-500">完成轻登录，开始你的支持之旅</p>
+            <h1 className="text-3xl font-bold text-gray-900 mb-3">欢迎回来</h1>
+            <p className="text-lg text-gray-500">完成轻登录，开始你的支持之旅</p>
           </motion.div>
 
           {/* 表单 */}
@@ -87,61 +87,61 @@ export const LoginPage = ({ onLogin }: LoginPageProps) => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="space-y-5"
+            className="space-y-6"
           >
             {/* 邀请码 */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">邀请码</label>
+              <label className="block text-base font-medium text-gray-700 mb-3">邀请码</label>
               <input
                 type="text"
                 value={inviteCode}
                 onChange={(e) => setInviteCode(e.target.value)}
                 placeholder="请输入参展码"
-                className="w-full px-4 py-4 text-base text-gray-800 bg-gray-50 rounded-2xl outline-none transition-all"
+                className="w-full px-6 py-6 text-lg text-gray-800 bg-gray-50 rounded-2xl outline-none transition-all"
                 style={{
-                  boxShadow: 'inset 0 0 0 30px #f5f5f5'
+                  boxShadow: 'inset 0 0 0 40px #f5f5f5'
                 }}
               />
             </div>
 
             {/* 昵称 */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">群昵称</label>
+              <label className="block text-base font-medium text-gray-700 mb-3">群昵称</label>
               <input
                 type="text"
                 value={nickname}
                 onChange={(e) => setNickname(e.target.value)}
                 placeholder="请输入你的昵称"
-                className="w-full px-4 py-4 text-base text-gray-800 bg-gray-50 rounded-2xl outline-none transition-all"
+                className="w-full px-6 py-6 text-lg text-gray-800 bg-gray-50 rounded-2xl outline-none transition-all"
                 style={{
-                  boxShadow: 'inset 0 0 0 30px #f5f5f5'
+                  boxShadow: 'inset 0 0 0 40px #f5f5f5'
                 }}
               />
             </div>
 
             {/* 协议 - 勾选框始终显示 */}
             <div 
-              className="flex items-start gap-3 cursor-pointer select-none"
+              className="flex items-start gap-4 cursor-pointer select-none"
               onClick={() => setAgreed(!agreed)}
             >
-              <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all mt-0.5 flex-shrink-0 ${
+              <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all mt-0.5 flex-shrink-0 ${
                 agreed 
                   ? 'bg-[#E07A5F] border-[#E07A5F]' 
                   : 'border-gray-300 bg-white'
               }`}>
-                {agreed && <Check className="w-3 h-3 text-white" strokeWidth={3} />}
+                {agreed && <Check className="w-4 h-4 text-white" strokeWidth={3} />}
               </div>
-              <p className="text-xs text-gray-500 leading-relaxed">
+              <p className="text-sm text-gray-500 leading-relaxed">
                 我已阅读并同意
                 <span className="text-[#E07A5F]">《微信群群规》</span>
               </p>
             </div>
 
-            {/* 主按钮 - 高度和字体增大 */}
+            {/* 主按钮 - 高度和字体加倍 */}
             <button
               onClick={handleSubmit}
               disabled={!isValid || !agreed || isSubmitting}
-              className={`w-full py-8 text-lg font-bold rounded-full transition-all flex items-center justify-center gap-2 ${
+              className={`w-full py-6 text-xl font-bold rounded-full transition-all flex items-center justify-center gap-2 ${
                 isValid && agreed && !isSubmitting
                   ? 'bg-black text-white active:scale-[0.98]'
                   : 'bg-gray-100 text-gray-400'
@@ -149,7 +149,7 @@ export const LoginPage = ({ onLogin }: LoginPageProps) => {
             >
               {isSubmitting ? (
                 <>
-                  <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                   <span>登录中...</span>
                 </>
               ) : (
@@ -163,7 +163,7 @@ export const LoginPage = ({ onLogin }: LoginPageProps) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3 }}
-            className="text-center text-xs text-gray-400 mt-8"
+            className="text-center text-sm text-gray-400 mt-10"
           >
             仅用于本次活动互动 · 保护你的隐私
           </motion.p>
