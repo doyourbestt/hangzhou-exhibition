@@ -89,7 +89,7 @@ export const LoginPage = ({ onLogin }: LoginPageProps) => {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="space-y-5"
           >
-            {/* 邀请码 - 高度80px */}
+            {/* 邀请码 */}
             <div>
               <label className="block text-base font-medium text-gray-700 mb-3">邀请码</label>
               <input
@@ -97,12 +97,12 @@ export const LoginPage = ({ onLogin }: LoginPageProps) => {
                 value={inviteCode}
                 onChange={(e) => setInviteCode(e.target.value)}
                 placeholder="请输入参展码"
-                style={{ height: '80px', paddingLeft: '24px', paddingRight: '24px', fontSize: '18px' }}
-                className="w-full text-lg text-gray-800 bg-gray-50 rounded-2xl outline-none transition-all border-2 border-gray-200 focus:border-[#E07A5F]"
+                className="w-full px-6 text-lg text-gray-800 bg-gray-50 rounded-2xl outline-none transition-all border-2 border-gray-200 focus:border-[#E07A5F]"
+                style={{ height: '80px', lineHeight: '76px' }}
               />
             </div>
 
-            {/* 昵称 - 高度80px */}
+            {/* 昵称 */}
             <div>
               <label className="block text-base font-medium text-gray-700 mb-3">群昵称</label>
               <input
@@ -110,12 +110,12 @@ export const LoginPage = ({ onLogin }: LoginPageProps) => {
                 value={nickname}
                 onChange={(e) => setNickname(e.target.value)}
                 placeholder="请输入你的昵称"
-                style={{ height: '80px', paddingLeft: '24px', paddingRight: '24px', fontSize: '18px' }}
-                className="w-full text-lg text-gray-800 bg-gray-50 rounded-2xl outline-none transition-all border-2 border-gray-200 focus:border-[#E07A5F]"
+                className="w-full px-6 text-lg text-gray-800 bg-gray-50 rounded-2xl outline-none transition-all border-2 border-gray-200 focus:border-[#E07A5F]"
+                style={{ height: '80px', lineHeight: '76px' }}
               />
             </div>
 
-            {/* 协议 - 勾选框始终显示 */}
+            {/* 协议 */}
             <div 
               className="flex items-start gap-4 cursor-pointer select-none"
               onClick={() => setAgreed(!agreed)}
@@ -133,16 +133,16 @@ export const LoginPage = ({ onLogin }: LoginPageProps) => {
               </p>
             </div>
 
-            {/* 主按钮 - 高度80px */}
+            {/* 主按钮 */}
             <button
               onClick={handleSubmit}
               disabled={!isValid || !agreed || isSubmitting}
-              style={{ height: '80px', fontSize: '18px' }}
               className={`w-full text-lg font-bold rounded-full transition-all flex items-center justify-center gap-2 ${
                 isValid && agreed && !isSubmitting
                   ? 'bg-black text-white active:scale-[0.98]'
                   : 'bg-gray-100 text-gray-400'
               }`}
+              style={{ height: '80px' }}
             >
               {isSubmitting ? (
                 <>
