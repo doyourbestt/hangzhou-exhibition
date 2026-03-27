@@ -45,7 +45,7 @@ export const LoginPage = ({ onLogin }: LoginPageProps) => {
           transition={{ duration: 0.8 }}
           className="relative z-10 text-center px-12"
         >
-          <div className="w-20 h-20 mx-auto mb-8 bg-gradient-to-br from-[#E07A5F] to-[#D4715E] rounded-2xl flex items-center justify-center shadow-lg shadow-[#E07A5F]/20">
+          <div className="w-20 h-20 mx-auto mb-8 mt-[-40px] bg-gradient-to-br from-[#E07A5F] to-[#D4715E] rounded-2xl flex items-center justify-center shadow-lg shadow-[#E07A5F]/20">
             <span className="text-white text-3xl font-bold">艺</span>
           </div>
           <h2 className="text-3xl font-bold text-gray-800 mb-4">艺起逛杭州</h2>
@@ -63,7 +63,7 @@ export const LoginPage = ({ onLogin }: LoginPageProps) => {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="md:hidden text-center mb-10"
+            className="md:hidden text-center mb-12 mt-[-40px]"
           >
             <div className="inline-flex items-center gap-2">
               <Heart className="w-4 h-4 text-[#E07A5F]" fill="#E07A5F" />
@@ -119,7 +119,7 @@ export const LoginPage = ({ onLogin }: LoginPageProps) => {
               />
             </div>
 
-            {/* 协议 */}
+            {/* 协议 - 勾选框始终显示 */}
             <div 
               className="flex items-start gap-3 cursor-pointer select-none"
               onClick={() => setAgreed(!agreed)}
@@ -137,11 +137,11 @@ export const LoginPage = ({ onLogin }: LoginPageProps) => {
               </p>
             </div>
 
-            {/* 主按钮 */}
+            {/* 主按钮 - 高度和字体增大 */}
             <button
               onClick={handleSubmit}
               disabled={!isValid || !agreed || isSubmitting}
-              className={`w-full py-4 rounded-full text-base font-bold transition-all flex items-center justify-center gap-2 ${
+              className={`w-full py-8 text-lg font-bold rounded-full transition-all flex items-center justify-center gap-2 ${
                 isValid && agreed && !isSubmitting
                   ? 'bg-black text-white active:scale-[0.98]'
                   : 'bg-gray-100 text-gray-400'
