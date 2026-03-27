@@ -24,16 +24,56 @@ export const LoginPage = ({ onLogin }: LoginPageProps) => {
 
   const isValid = inviteCode.length >= 4 && nickname.length >= 2;
 
+  const inputStyle: React.CSSProperties = {
+    height: '80px',
+    padding: '0 24px',
+    fontSize: '18px',
+    lineHeight: '80px',
+    borderWidth: '2px',
+    borderStyle: 'solid',
+    borderColor: '#e5e7eb',
+    borderRadius: '16px',
+    outline: 'none',
+    backgroundColor: '#f9fafb',
+    color: '#1f2937',
+    width: '100%',
+  };
+
+  const buttonStyle: React.CSSProperties = {
+    height: '80px',
+    fontSize: '18px',
+    fontWeight: 'bold',
+    borderRadius: '9999px',
+    width: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: '8px',
+    border: 'none',
+    cursor: isValid && agreed && !isSubmitting ? 'pointer' : 'not-allowed',
+    transition: 'all 0.2s',
+  };
+
   return (
-    <div className="min-h-screen bg-white flex">
-      {/* 左侧品牌区 - PC端显示 */}
-      <div className="hidden md:flex md:w-1/2 bg-gradient-to-br from-[#F8F6F3] to-[#F0EDE8] items-center justify-center relative overflow-hidden">
-        {/* 装饰圆形 */}
+    <div style={{ minHeight: '100vh', backgroundColor: '#ffffff', display: 'flex' }}>
+      {/* 左侧品牌区 - PC端 */}
+      <div style={{ 
+        display: 'none',
+        width: '50%',
+        background: 'linear-gradient(to bottom right, #F8F6F3, #F0EDE8)',
+        alignItems: 'center',
+        justifyContent: 'center',
+        position: 'relative',
+        overflow: 'hidden'
+      }} className="md:flex">
         <motion.div 
           animate={{ rotate: 360 }}
           transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-          className="absolute w-[500px] h-[500px] rounded-full"
           style={{
+            position: 'absolute',
+            width: '500px',
+            height: '500px',
+            borderRadius: '50%',
             background: 'conic-gradient(from 0deg, #E07A5F, #F4A261, #E9C46A, #2A9D8F, #E07A5F)',
             opacity: 0.15
           }}
@@ -43,13 +83,24 @@ export const LoginPage = ({ onLogin }: LoginPageProps) => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="relative z-10 text-center px-12"
+          style={{ position: 'relative', zIndex: 10, textAlign: 'center', padding: '0 48px' }}
         >
-          <div className="w-24 h-24 mx-auto mb-10 mt-[-80px] bg-gradient-to-br from-[#E07A5F] to-[#D4715E] rounded-3xl flex items-center justify-center shadow-lg shadow-[#E07A5F]/20">
-            <span className="text-white text-4xl font-bold">艺</span>
+          <div style={{
+            width: '96px',
+            height: '96px',
+            margin: '0 auto 40px',
+            marginTop: '-80px',
+            background: 'linear-gradient(to bottom right, #E07A5F, #D4715E)',
+            borderRadius: '24px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            boxShadow: '0 10px 15px -3px rgba(224, 122, 95, 0.2)'
+          }}>
+            <span style={{ color: 'white', fontSize: '36px', fontWeight: 'bold' }}>艺</span>
           </div>
-          <h2 className="text-4xl font-bold text-gray-800 mb-6">艺起逛杭州</h2>
-          <p className="text-xl text-gray-500 leading-relaxed">
+          <h2 style={{ fontSize: '36px', fontWeight: 'bold', color: '#1f2937', marginBottom: '24px' }}>艺起逛杭州</h2>
+          <p style={{ fontSize: '20px', color: '#6b7280', lineHeight: '1.75' }}>
             发现杭州之美<br/>
             支持你喜欢的领队队长
           </p>
@@ -57,17 +108,24 @@ export const LoginPage = ({ onLogin }: LoginPageProps) => {
       </div>
 
       {/* 右侧登录区 */}
-      <div className="w-full md:w-1/2 flex items-center justify-center p-12">
-        <div className="w-full max-w-[400px]">
-          {/* Logo - 移动端显示 */}
+      <div style={{
+        width: '100%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '48px',
+      }} className="md:w-1/2">
+        <div style={{ width: '100%', maxWidth: '400px' }}>
+          {/* Logo - 移动端 */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="md:hidden text-center mb-16"
+            style={{ textAlign: 'center', marginBottom: '64px' }}
+            className="md:hidden"
           >
-            <div className="inline-flex items-center gap-3">
-              <Heart className="w-5 h-5 text-[#E07A5F]" fill="#E07A5F" />
-              <span className="text-base text-gray-500 tracking-wider">艺起逛杭州</span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', justifyContent: 'center' }}>
+              <Heart style={{ width: '20px', height: '20px', color: '#E07A5F', fill: '#E07A5F' }} />
+              <span style={{ fontSize: '16px', color: '#6b7280' }}>艺起逛杭州</span>
             </div>
           </motion.div>
 
@@ -76,10 +134,10 @@ export const LoginPage = ({ onLogin }: LoginPageProps) => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="mb-12"
+            style={{ marginBottom: '48px' }}
           >
-            <h1 className="text-3xl font-bold text-gray-900 mb-3">欢迎回来</h1>
-            <p className="text-lg text-gray-500">完成轻登录，开始你的支持之旅</p>
+            <h1 style={{ fontSize: '30px', fontWeight: 'bold', color: '#111827', marginBottom: '12px' }}>欢迎回来</h1>
+            <p style={{ fontSize: '18px', color: '#6b7280' }}>完成轻登录，开始你的支持之旅</p>
           </motion.div>
 
           {/* 表单 */}
@@ -87,49 +145,60 @@ export const LoginPage = ({ onLogin }: LoginPageProps) => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="space-y-5"
+            style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}
           >
             {/* 邀请码 */}
             <div>
-              <label className="block text-base font-medium text-gray-700 mb-3">邀请码</label>
+              <label style={{ display: 'block', fontSize: '16px', fontWeight: '500', color: '#374151', marginBottom: '12px' }}>邀请码</label>
               <input
                 type="text"
                 value={inviteCode}
                 onChange={(e) => setInviteCode(e.target.value)}
                 placeholder="请输入参展码"
-                className="w-full px-6 text-lg text-gray-800 bg-gray-50 rounded-2xl outline-none transition-all border-2 border-gray-200 focus:border-[#E07A5F]"
-                style={{ height: '80px', lineHeight: '76px' }}
+                style={inputStyle}
+                onFocus={(e) => e.target.style.borderColor = '#E07A5F'}
+                onBlur={(e) => e.target.style.borderColor = '#e5e7eb'}
               />
             </div>
 
             {/* 昵称 */}
             <div>
-              <label className="block text-base font-medium text-gray-700 mb-3">群昵称</label>
+              <label style={{ display: 'block', fontSize: '16px', fontWeight: '500', color: '#374151', marginBottom: '12px' }}>群昵称</label>
               <input
                 type="text"
                 value={nickname}
                 onChange={(e) => setNickname(e.target.value)}
                 placeholder="请输入你的昵称"
-                className="w-full px-6 text-lg text-gray-800 bg-gray-50 rounded-2xl outline-none transition-all border-2 border-gray-200 focus:border-[#E07A5F]"
-                style={{ height: '80px', lineHeight: '76px' }}
+                style={inputStyle}
+                onFocus={(e) => e.target.style.borderColor = '#E07A5F'}
+                onBlur={(e) => e.target.style.borderColor = '#e5e7eb'}
               />
             </div>
 
             {/* 协议 */}
             <div 
-              className="flex items-start gap-4 cursor-pointer select-none"
+              style={{ display: 'flex', alignItems: 'flex-start', gap: '16px', cursor: 'pointer' }}
               onClick={() => setAgreed(!agreed)}
             >
-              <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all mt-0.5 flex-shrink-0 ${
-                agreed 
-                  ? 'bg-[#E07A5F] border-[#E07A5F]' 
-                  : 'border-gray-300 bg-white'
-              }`}>
-                {agreed && <Check className="w-4 h-4 text-white" strokeWidth={3} />}
+              <div style={{
+                width: '24px',
+                height: '24px',
+                borderRadius: '50%',
+                border: '2px solid',
+                borderColor: agreed ? '#E07A5F' : '#d1d5db',
+                backgroundColor: agreed ? '#E07A5F' : '#ffffff',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginTop: '2px',
+                flexShrink: 0,
+                transition: 'all 0.2s'
+              }}>
+                {agreed && <Check style={{ width: '14px', height: '14px', color: 'white', strokeWidth: 3 }} />}
               </div>
-              <p className="text-sm text-gray-500 leading-relaxed">
+              <p style={{ fontSize: '14px', color: '#6b7280', lineHeight: '1.5' }}>
                 我已阅读并同意
-                <span className="text-[#E07A5F]">《微信群群规》</span>
+                <span style={{ color: '#E07A5F' }}>《微信群群规》</span>
               </p>
             </div>
 
@@ -137,16 +206,22 @@ export const LoginPage = ({ onLogin }: LoginPageProps) => {
             <button
               onClick={handleSubmit}
               disabled={!isValid || !agreed || isSubmitting}
-              className={`w-full text-lg font-bold rounded-full transition-all flex items-center justify-center gap-2 ${
-                isValid && agreed && !isSubmitting
-                  ? 'bg-black text-white active:scale-[0.98]'
-                  : 'bg-gray-100 text-gray-400'
-              }`}
-              style={{ height: '80px' }}
+              style={{
+                ...buttonStyle,
+                backgroundColor: isValid && agreed && !isSubmitting ? '#000000' : '#f3f4f6',
+                color: isValid && agreed && !isSubmitting ? '#ffffff' : '#9ca3af',
+              }}
             >
               {isSubmitting ? (
                 <>
-                  <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  <div style={{
+                    width: '24px',
+                    height: '24px',
+                    border: '2px solid rgba(255,255,255,0.3)',
+                    borderTopColor: 'white',
+                    borderRadius: '50%',
+                    animation: 'spin 1s linear infinite'
+                  }} />
                   <span>登录中...</span>
                 </>
               ) : (
@@ -160,12 +235,19 @@ export const LoginPage = ({ onLogin }: LoginPageProps) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3 }}
-            className="text-center text-sm text-gray-400 mt-10"
+            style={{ textAlign: 'center', fontSize: '14px', color: '#9ca3af', marginTop: '40px' }}
           >
             仅用于本次活动互动 · 保护你的隐私
           </motion.p>
         </div>
       </div>
+
+      <style>{`
+        @keyframes spin {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+      `}</style>
     </div>
   );
 };
